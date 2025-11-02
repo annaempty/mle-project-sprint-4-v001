@@ -170,3 +170,4 @@ env_recsys_start/
 model/
 data/
 recommendations/
+catboost_info/

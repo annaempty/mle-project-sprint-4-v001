@@ -84,3 +84,6 @@ cd mle-project-sprint-4-v001/
 source .env/bin/activate
 python test_service.py > test_service.log 2>&1
 *>
+
+** Логи в файле mle-project-sprint-4-v001/test_service.txt
+Не поняла как пушить с расширением log

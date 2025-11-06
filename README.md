@@ -63,10 +63,24 @@ jupyter lab --ip=0.0.0.0 --no-browser
 
 Код сервиса рекомендаций находится в файле `recommendations_service.py`.
 
-<*укажите здесь необходимые шаги для запуска сервиса рекомендаций*>
+Откройте 3 терминала 
+cd mle-project-sprint-4-v001/
+
+Активируйте виртуальную среду и скопируйте данные из файла .env
+source .env/bin/activate
+export $(cat .env | xargs)
+
+uvicorn recommendations_service:app --reload --host 0.0.0.0 --port 8000
+uvicorn features_service:app --reload --host 0.0.0.0 --port 8010
+uvicorn events_service:app --reload --host 0.0.0.0 --port 8020 
+
 
 # Инструкции для тестирования сервиса
 
 Код для тестирования сервиса находится в файле `test_service.py`.
 
-<*укажите здесь необходимые шаги для тестирования сервиса рекомендаций*>
+<*
+cd mle-project-sprint-4-v001/
+source .env/bin/activate
+python test_service.py > test_service.log 2>&1
+*>

@@ -1,35 +1,12 @@
 from fastapi import FastAPI
 import logging as log
+from events import EventStore
 
 logger = log.getLogger("uvicorn.error")
 log.basicConfig(
     level=log.INFO,  
     format='%(asctime)s [%(levelname)s] %(message)s'
 )
-
-class EventStore:
-
-    def __init__(self, max_events_per_user=10):
-        self.events = {}
-        self.max_events_per_user = max_events_per_user
-
-    def put(self, user_id, item_id):
-        """
-        Сохраняет событие
-        """
-        log.info(f'in put: {self.events}')
-        user_events = self.events.get(user_id, [])  
-        self.events[user_id] = [item_id] + user_events[: self.max_events_per_user]
-        log.info(f"in put: {self.events}")
-
-    def get(self, user_id, k):
-        """
-        Возвращает события для пользователя
-        """
-        log.info(self.events)
-        user_events = self.events.get(user_id, [])  # если пользователя нет — пустой список
-        return user_events[:k]  
-
 
 # создаём глобальный стор
 
@@ -44,9 +21,10 @@ async def put(user_id: int, item_id: int):
     """
     Сохраняет событие для user_id, item_id
     """
-    log.info(events_store)
+    log.info(f"Сохранение события item_id = {item_id}, для user_id = {user_id}")
+    log.info(f"events_store ДО сохранения {events_store.events}")
     events_store.put(user_id, item_id)
-    log.info(events_store)
+    log.info(f"events_store ПОСЛЕ сохранения {events_store.events}")
     return {"result": "ok"}
 
 @app.get("/get")
